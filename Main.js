@@ -1,4 +1,5 @@
 let legalSquares = [];
+let isWhiteTurn = true;
 const boardSquares = document.getElementsByClassName("square");
 const pieces = document.getElementsByClassName("piece");
 const piecesImages = document.getElementsByTagName("img");
@@ -35,7 +36,9 @@ function allowDrop(ev) {
 
 function drag(ev) {
     const piece = ev.target;
-    ev.dataTransfer.setData("text", piece.id);
+    const pieceColor = piece.getAttribute("color");
+    if((isWhiteTurn && pieceColor=="white")||(!isWhiteTurn && pieceColor=="black"))
+     ev.dataTransfer.setData("text", piece.id);
 }
 
 function drop(ev) {
@@ -45,4 +48,5 @@ function drop(ev) {
     const destinationSquare = ev.currentTarget;
     let destinationSquareId = destinationSquare.id;
     destinationSquare.appendChild(piece);
+    isWhiteTurn=!isWhiteTurn;
 }
